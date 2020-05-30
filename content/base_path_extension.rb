@@ -37,11 +37,8 @@ class FixBasePath < Middleman::Extension
       File.open(file, "w") do |f|
         f.write(new_data)
       end
-      builder.say_status :fixed_css, file.sub(prefix, "")
-
+      builder.say_status :fixed_html, file.sub(prefix, "")
     end
-
-    puts html_files
 
   end
 end
