@@ -1,3 +1,4 @@
-*.erb
+*
 !_sidebar.erb
 !layout.erb
+!inner.erb
