@@ -20,9 +20,7 @@ endif
 	@cd content/source/layouts && ln -s ../../../ext/providers/$(PROVIDER_SLUG)/website/$(PROVIDER_SLUG).erb $(PROVIDER_SLUG).erb
 	@echo "==> Building $(PROVIDER_NAME) provider website in Docker..."
 	@docker run \
-		--interactive \
 		--rm \
-		--tty \
 		--publish "4567:4567" \
 		--publish "35729:35729" \
 		--volume "$(PROVIDER_PATH)/website:/website" \
