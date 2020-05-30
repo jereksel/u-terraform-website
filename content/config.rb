@@ -14,7 +14,7 @@ config[:file_watcher_ignore] += [/^(\/website\/)?ext\//]
 require "middleman_helpers"
 helpers Helpers
 
-rewrites = ["intro/index.html", "community.html"]
+rewrites = ["intro/index.html", "community.html", "/docs/providers/index.html"]
 
 rewrites.each do |url|
     redirect url, to: "https://terraform.io/#{url}"
