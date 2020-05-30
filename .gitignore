@@ -6,3 +6,5 @@ vendor
 .idea*
 *.DS_Store
 content/source/docs/providers/*.erb
+grafana-build
+grafana-build-base-dir

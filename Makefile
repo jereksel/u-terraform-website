@@ -31,6 +31,7 @@ endif
 		--volume "$(shell pwd)/content/source/layouts:/website/docs/layouts" \
 		--volume "$(PROVIDER_PATH)/website/build:/terraform-website/build" \
 		-e "DEPLOY_ENV=${DEPLOY_ENV}" \
+		-e "BASE_PATH=${BASE_PATH}" \
 		--workdir /terraform-website \
 		-e PROVIDER_SLUG=$(PROVIDER_SLUG) \
 		hashicorp/middleman-hashicorp:${VERSION} \
@@ -83,8 +84,18 @@ grafana:
 	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
 
 grafana-build:
-	@cd ext/terraform-website && git submodule init ext/providers/grafana && git submodule update
+	-@rm -r grafana-build
+	-@rm -rf $(shell pwd)/ext/terraform-website/ext/providers/grafana/website/build
 	@$(MAKE) build PROVIDER_PATH=$(shell pwd)/ext/terraform-website/ext/providers/grafana PROVIDER_NAME=grafana
+	@cp -R $(shell pwd)/ext/terraform-website/ext/providers/grafana/website/build grafana-build
+	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
+
+grafana-build-base-dir:
+	-@rm -r grafana-build-base-dir
+	@mkdir grafana-build-base-dir
+	@cd ext/terraform-website && git submodule init ext/providers/grafana && git submodule update
+	@$(MAKE) build PROVIDER_PATH=$(shell pwd)/ext/terraform-website/ext/providers/grafana PROVIDER_NAME=grafana BASE_PATH=grafana-provider
+	@cp -R $(shell pwd)/ext/terraform-website/ext/providers/grafana/website/build grafana-build-base-dir/grafana-provider
 	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
 
 sync:
@@ -99,5 +110,5 @@ desync:
 	@git submodule deinit --all -f
 
 
-.PHONY: sync grafana
+.PHONY: sync grafana grafana-build grafana-build-base-dir
 .DEFAULT_GOAL := .PHONY
