@@ -31,7 +31,7 @@ endif
 		--volume "$(shell pwd)/content:/terraform-website" \
 		--volume "$(shell pwd)/content/source/assets:/website/docs/assets" \
 		--volume "$(shell pwd)/content/source/layouts:/website/docs/layouts" \
-		--volume "$(shell pwd)/content/build:/website/build" \
+		--volume "$(PROVIDER_PATH)/website/build:/terraform-website/build" \
 		-e "DEPLOY_ENV=${DEPLOY_ENV}" \
 		--workdir /terraform-website \
 		-e PROVIDER_SLUG=$(PROVIDER_SLUG) \
