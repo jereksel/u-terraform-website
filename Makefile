@@ -63,6 +63,7 @@ endif
 		--interactive \
 		--rm \
 		--tty \
+		--name "tf-website-$(PROVIDER_NAME)-temp" \
 		--publish "4567:4567" \
 		--publish "35729:35729" \
 		--volume "$(PROVIDER_PATH)/website:/website" \
@@ -75,27 +76,28 @@ endif
 		-e PROVIDER_SLUG=$(PROVIDER_SLUG) \
 		hashicorp/middleman-hashicorp:${VERSION} \
 		bundle exec middleman server --verbose --instrument
-	@docker stop "tf-website-$(PROVIDER_NAME)-temp"
 	@rm content/source/docs/providers/$(PROVIDER_SLUG)
 	@rm content/source/layouts/$(PROVIDER_SLUG).erb
 
 grafana:
+	@cd ext/terraform-website && git submodule init ext/providers/grafana && git submodule update
 	@$(MAKE) website PROVIDER_PATH=$(shell pwd)/ext/terraform-website/ext/providers/grafana PROVIDER_NAME=grafana
+	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
 
 grafana-build:
+	@cd ext/terraform-website && git submodule init ext/providers/grafana && git submodule update
 	@$(MAKE) build PROVIDER_PATH=$(shell pwd)/ext/terraform-website/ext/providers/grafana PROVIDER_NAME=grafana
+	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
 
 sync:
 	@echo "==> Syncing submodules for upstream changes"
 	@git submodule update --init --remote
-	@cd ext/terraform-website && git submodule init ext/terraform
-	@# For testing
-	@cd ext/terraform-website && git submodule init ext/providers/cloudflare
-	@cd ext/terraform-website && git submodule init ext/providers/grafana
-	@cd ext/terraform-website && git submodule update
+	@cd ext/terraform-website && git submodule init ext/terraform && git submodule update
 
 desync:
 	@echo "==> Deinitializing submodules"
 	@git submodule deinit --all -f
 
-.PHONY: sync build website
+
+.PHONY: sync grafana
+.DEFAULT_GOAL := .PHONY
