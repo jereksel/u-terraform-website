@@ -90,6 +90,8 @@ grafana-build:
 	@cd ext/terraform-website && git submodule deinit -f ext/providers/grafana
 
 sync:
+	@echo "==> Syncing repository"
+	@git pull
 	@echo "==> Syncing submodules for upstream changes"
 	@git submodule update --init --remote
 	@cd ext/terraform-website && git submodule init ext/terraform && git submodule update
