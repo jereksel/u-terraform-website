@@ -4,14 +4,8 @@ class FixBasePath < Middleman::Extension
   option :base_path, "", 'Sets base path'
 
   def after_build(builder)
-
-    if (options.base_path)
-      return
-    end
-
     fix_css(builder)
     fix_html(builder)
-
   end
 
   def fix_css(builder)
