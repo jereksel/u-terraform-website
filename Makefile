@@ -2,20 +2,6 @@ VERSION?="0.3.44"
 MKFILE_PATH=$(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 DEPLOY_ENV?="development"
 
-# build:
-# 	@echo "==> Starting build in Docker..."
-# 	@mkdir -p content/build
-# 	@docker run \
-# 		--interactive \
-# 		--rm \
-# 		--tty \
-# 		--volume "$(shell pwd)/ext:/ext" \
-# 		--volume "$(shell pwd)/content:/website" \
-# 		--volume "$(shell pwd)/content/build:/website/build" \
-# 		-e "DEPLOY_ENV=${DEPLOY_ENV}" \
-# 		hashicorp/middleman-hashicorp:${VERSION} \
-# 		bundle exec middleman build --verbose --clean
-
 build:
 ifeq ($(PROVIDER_PATH),)
 	@echo 'Please set PROVIDER_PATH'
