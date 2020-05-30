@@ -8,8 +8,8 @@ activate :hashicorp do |h|
   h.minify_javascript = false
 end
 
-ignore "ext/**/*"
-config[:file_watcher_ignore] += [/^(\/website\/)?ext\//]
+# ignore "ext/**/*"
+# config[:file_watcher_ignore] += [/^(\/website\/)?ext\//]
 
 require "middleman_helpers"
 helpers Helpers
