@@ -27,5 +27,6 @@ end
 provider = ENV['PROVIDER_SLUG']
 redirect "index.html", to: "docs/providers/#{provider}"
 
-# For Github pages: https://stackoverflow.com/a/23443761
+# For GitHub Pages:
+activate :relative_assets
 set :relative_links, true
