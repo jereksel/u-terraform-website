@@ -7,6 +7,7 @@
 - Only builds provider websites
 - Automatic redirect from `/` to provider website
 - Much smaller and simpler to debug (I couldn't get upstream to work due to https://github.com/hashicorp/terraform-website/issues/3)
+- Full support for base path (required for GitHub Pages)
 
 ## How to use
 
